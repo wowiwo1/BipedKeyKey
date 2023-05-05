@@ -12,17 +12,21 @@ macroScript BipedKeyKey
 
 	    if isCom(s) then
 	    (
+			for k = 1 to 3 do
+			(
+				append SelectedkeyList #()
+			)
 	        ctrls = #(s.controller.vertical.controller, s.controller.Horizontal.controller, s.controller.Turning.controller)
-	        for ctrl in ctrls do
+	        for i = 1 to 3 do
 	        (
-	            n = numKeys ctrl
+	            n = numKeys ctrls[i]
 	            if n > 0 do
 	            (
 	                for k = 1 to n do
 	                (
-	                    if isKeySelected ctrl k do
+	                    if isKeySelected ctrls[i] k do
 	                    ( 
-	                        appendIfUnique SelectedkeyList (getKeyTime ctrl k)
+	                        append SelectedkeyList[i] (getKeyTime ctrls[i] k)
 	                    )
 	                )
 	            )
@@ -48,10 +52,16 @@ macroScript BipedKeyKey
 
 	    if isCom(s) then
 	    (
-	        for k in SelectedkeyList do
+	        for k in SelectedkeyList[1] do
 	        (
 	            biped.addNewKey s.controller.vertical.controller k
+	        )
+	        for k in SelectedkeyList[2] do
+	        (
 	            biped.addNewKey s.controller.horizontal.controller k
+	        )
+	        for k in SelectedkeyList[3] do
+	        (
 	            biped.addNewKey s.controller.turning.controller k
 	        )
 	    ) else (
